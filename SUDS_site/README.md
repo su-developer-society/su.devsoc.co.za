@@ -1,3 +1,23 @@
+
+Here's the gist, I need you to compare the code in the SUDS-site app/
+Add where necessary and subtract elsewhere too. I'm going to bed now because I have a commmitment tomorrow at 6am, a bit of a drag but nevertheless.
+
+
+Next, I hope to do a final design review when I wake. And I may have made the rookie mistake of adding node modules. The frontend stack is Next.js, Typescript and Tailwind Css. I used a template to get started and hence whatever you see below is part of the template readme.
+
+Finally, well. HAVE FUN?
+
+
+May the six elements of Chat, Grok, Co-pilot, Claude, Gemnini and DeepSeek assist you where you get lost. 
+
+And there's also a bunch of files you may have to remove from the repo. I trust you with this.
+
+Peace,
+ELLEN
+
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
