@@ -14,7 +14,7 @@ export default function Home() {
 
   return (
     
-    <div className="relative min-h-screen bg-gray-100 overflow-x-hidden">
+    <div className="relative min-h-screen overflow-x-hidden">
       {/* The cool Background stuff*/}
       <Particles
         id="tsparticles"
@@ -84,6 +84,14 @@ export default function Home() {
           },
           detectRetina: true,
         }}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: 1,
+        }}
         className="absolute inset-0 -z-10"
       />  
 
@@ -146,9 +154,9 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative z-10 bg-gradient-to-br from-[#8C1D40] to-[#6B1530] text-white py-24 md:py-32">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6">
+      <section className="relative z-10 text-white py-24 md:py-32">
+        <div className="relative text-center">
+          <h2 className="text-4xl md:text-6xl text-center mb-8 text-[#8C1D40] font-bold">
             Stellenbosch University
             <br />
             <span className="relative inline-block">
@@ -156,8 +164,8 @@ export default function Home() {
               <span className="absolute -bottom-2 left-0 w-full h-1 bg-[#FFB81C]"></span>
             </span>
           </h2>
-          <p className="text-xl md:text-2xl mb-8 text-gray-100">
-            Building the future, one project at a time
+          <p className="text-xl md:text-2xl mb-8 text-[#8C1D40]">
+            Saying stuff with Audacity
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button className="bg-white text-[#8C1D40] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
@@ -203,7 +211,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="relative z-10 py-20 bg-white/80 backdrop-blur-sm">
+      <section id="about" className="relative z-10 py-20 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-4">
           <h3 className="text-4xl font-bold text-center mb-8 text-[#8C1D40]">
             About Us
@@ -245,7 +253,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="relative z-10 py-20 bg-gray-50/80 backdrop-blur-sm">
+      <section id="contact" className="relative z-10 py-20 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h3 className="text-4xl font-bold mb-8 text-[#8C1D40]">Get In Touch</h3>
           <p className="text-lg text-gray-700 mb-4">
