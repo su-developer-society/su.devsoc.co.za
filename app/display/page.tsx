@@ -5,6 +5,7 @@ import Image from "next/image";
 import ElectricGrid from "../components/ElectricGrid";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+// Icons left in case future cloud callouts are reintroduced
 
 type DisplayMode =
   | "phrases"
@@ -256,7 +257,7 @@ export default function DisplayPage() {
     }, 12000);
     const codeTimer = setInterval(() => {
       setCodeIndex((i) => (i + 1) % codeSnippets.length);
-    }, 12000);
+    }, 15000);
     return () => {
       clearInterval(phraseTimer);
       clearInterval(partnerTimer);
@@ -308,7 +309,7 @@ export default function DisplayPage() {
       idx += 1;
       setTypedText(typedTarget.slice(0, idx));
       if (idx >= typedTarget.length) clearInterval(timer);
-    }, 22); // faster typing for code/phrases
+    }, 40); // faster typing for code/phrases
     return () => clearInterval(timer);
   }, [typedTarget]);
 
@@ -441,16 +442,16 @@ export default function DisplayPage() {
       case "code":
         return (
           <div className="flex h-full flex-col items-start justify-center gap-3 font-mono text-lg text-purple-200">
-            <div className="w-full bg-black/50 px-4 py-3 border border-purple-900/50">
+            <div className="w-full bg-black/50 px-4 py-3 border border-purple-900/50 whitespace-pre-line">
               {typedText}
               {cursor}
             </div>
-            <div className="text-xs text-gray-500">SUDS code streams</div>
           </div>
         );
       case "pillar": {
         const pillar = option.pillar!;
         const rotating = pillar.lines[(phraseIndex + pillar.title.length) % pillar.lines.length];
+        const isCloud = option.id === "pillar-cloud";
         return (
           <div className="flex h-full flex-col items-center justify-center gap-4 text-center">
             <div className="text-xs uppercase tracking-[0.35em] text-purple-300">Focus</div>
@@ -459,19 +460,19 @@ export default function DisplayPage() {
               {typedText || rotating}
               {cursor}
             </div>
+            {isCloud && null}
           </div>
         );
       }
       case "dvd": {
         const pos = dvdPos;
         return (
-          <div className="relative h-full w-full overflow-hidden">
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:60px_60px] opacity-30" />
+          <div className="relative h-full w-full overflow-hidden bg-black">
             <div
               className="absolute"
               style={{ transform: `translate(${pos.x}px, ${pos.y}px)` }}
             >
-              <div className="flex items-center justify-center h-20 w-32 border border-purple-500 bg-black/70 shadow-[0_0_30px_rgba(168,85,247,0.5)]">
+              <div className="flex items-center justify-center h-20 w-32 bg-black border border-purple-500">
                 <Image src="/logo.svg" alt="SUDS logo" width={96} height={48} className="h-10 w-auto" />
               </div>
             </div>
@@ -543,7 +544,9 @@ export default function DisplayPage() {
 
           <div
             ref={previewRef}
-            className="relative min-h-[500px] border border-purple-800 bg-black/80 p-6 flex items-stretch justify-center overflow-hidden"
+            className={`relative min-h-[500px] border border-purple-800 bg-black/80 flex items-stretch justify-center overflow-hidden ${
+              selected.mode === "dvd" ? "p-0" : "p-6"
+            }`}
           >
             <div
               className={`absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(88,28,135,0.12),_transparent_55%)] pointer-events-none`}
