@@ -3,6 +3,7 @@
 import ElectricGrid from "./components/ElectricGrid";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import PartnersMarquee from "./components/PartnersMarquee";
 import { useLanguage } from "./context/LanguageContext";
 
 export default function Home() {
@@ -38,22 +39,8 @@ export default function Home() {
           <p className="text-center text-gray-500 mb-12">
             {t("home.partnersSubtitle")}
           </p>
-          
-          {/* Partner logos placeholder */}
-          <div className="flex flex-wrap justify-center items-center gap-12">
-            <div className="w-32 h-16 bg-gray-900/50 border border-purple-900/30 flex items-center justify-center text-gray-600 text-sm">
-              Partner 1
-            </div>
-            <div className="w-32 h-16 bg-gray-900/50 border border-purple-900/30 flex items-center justify-center text-gray-600 text-sm">
-              Partner 2
-            </div>
-            <div className="w-32 h-16 bg-gray-900/50 border border-purple-900/30 flex items-center justify-center text-gray-600 text-sm">
-              Partner 3
-            </div>
-            <div className="w-32 h-16 bg-gray-900/50 border border-purple-900/30 flex items-center justify-center text-gray-600 text-sm">
-              Partner 4
-            </div>
-          </div>
+
+          <PartnersMarquee />
         </div>
       </section>
 
