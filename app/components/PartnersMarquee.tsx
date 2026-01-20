@@ -24,6 +24,7 @@ export default function PartnersMarquee() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(false);
   const isDraggingRef = useRef(false);
+  const dragDistanceRef = useRef(0);
   const startXRef = useRef(0);
   const startScrollRef = useRef(0);
   const partners = useMemo(
@@ -115,31 +116,35 @@ export default function PartnersMarquee() {
     const container = scrollRef.current;
     if (!container) return;
     pausedRef.current = true;
-    isDraggingRef.current = true;
+    isDraggingRef.current = false;
+    dragDistanceRef.current = 0;
     startXRef.current = event.clientX;
     startScrollRef.current = container.scrollLeft;
-    container.setPointerCapture(event.pointerId);
     container.classList.add("cursor-grabbing");
   };
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
     const container = scrollRef.current;
-    if (!container || !isDraggingRef.current) return;
+    if (!container) return;
     const delta = startXRef.current - event.clientX;
-    container.scrollLeft = startScrollRef.current + delta;
+    if (Math.abs(delta) > 3) {
+      isDraggingRef.current = true;
+    }
+    if (isDraggingRef.current) {
+      dragDistanceRef.current = delta;
+      container.scrollLeft = startScrollRef.current + delta;
+    }
   };
 
   const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
     const container = scrollRef.current;
-    if (!container || !isDraggingRef.current) return;
-    isDraggingRef.current = false;
+    if (!container) return;
     pausedRef.current = false;
-    try {
-      container.releasePointerCapture(event.pointerId);
-    } catch {
-      // ignore if capture was not set
-    }
+    isDraggingRef.current = false;
     container.classList.remove("cursor-grabbing");
+    if (Math.abs(dragDistanceRef.current) > 3) {
+      event.preventDefault();
+    }
   };
 
   return (
@@ -174,6 +179,12 @@ export default function PartnersMarquee() {
             className="relative isolate flex min-w-[180px] items-center justify-center border border-purple-900/50 bg-gradient-to-b from-purple-900/20 to-black/70 px-6 py-4 shadow-xl shadow-purple-900/20 transition-transform duration-300 hover:-translate-y-1 hover:border-purple-400/70 hover:shadow-purple-700/30"
             onFocus={pause}
             onBlur={play}
+            onClick={(e) => {
+              if (Math.abs(dragDistanceRef.current) > 3) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+            }}
           >
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-white/5 via-white/0 to-white/5 opacity-0 transition-opacity duration-300 group-hover:opacity-70" />
             <Image
