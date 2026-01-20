@@ -47,7 +47,7 @@ export default function ProjectCard({ project }: Props) {
           target="_blank"
           className="text-sm font-medium text-blue-600 hover:underline"
         >
-          View project →
+          {t("projects.view-project")}
         </Link>
       </div>
     </article>
