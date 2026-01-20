@@ -182,7 +182,7 @@ export const translations: Translations = {
   "projects.title": {
     en: "Projects",
     af: "Projekte",
-    xh: "Iinkonzo",
+    xh: "Iiprojekthi",
   },
 
   "projects.project-one-title": {
