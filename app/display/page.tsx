@@ -15,7 +15,8 @@ type DisplayMode =
   | "code"
   | "pillar"
   | "pillarsCycle"
-  | "dvd";
+  | "dvd"
+  | "logoMode";
 
 type DisplayOption = {
   id: string;
@@ -163,6 +164,13 @@ const displayOptions: DisplayOption[] = [
     mode: "dvd",
     accent: { from: "from-blue-400/25", via: "via-purple-500/15", to: "to-pink-400/20" },
   },
+  {
+    id: "logo-mode",
+    label: "Logo Mode",
+    description: "Centered logo with rotating hero phrases.",
+    mode: "logoMode",
+    accent: { from: "from-purple-500/25", via: "via-indigo-500/15", to: "to-fuchsia-500/25" },
+  },
   ...pillarScreens,
 ];
 
@@ -276,6 +284,7 @@ export default function DisplayPage() {
 
   const currentTypedSource = useMemo(() => {
     if (selected.mode === "phrases") return phrases[phraseIndex];
+    if (selected.mode === "logoMode") return phrases[phraseIndex];
     if (selected.mode === "pillar" && selected.pillar) {
       const rotating = selected.pillar.lines[(phraseIndex + selected.pillar.title.length) % selected.pillar.lines.length];
       return `${selected.pillar.title} — ${rotating}`;
@@ -479,6 +488,21 @@ export default function DisplayPage() {
           </div>
         );
       }
+      case "logoMode": {
+        return (
+          <div className="relative h-full w-full flex items-center justify-center">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(88,28,135,0.12),_transparent_60%)]" />
+            <div className="flex flex-col items-center gap-4 text-center">
+              <Image src="/logo_white.svg" alt="SUDS logo" width={416} height={166} className="h-36 w-auto" />
+              <div className="text-2xl sm:text-3xl font-bold text-white">
+                {typedText || phrases[phraseIndex]}
+                {cursor}
+              </div>
+              <div className="text-sm uppercase tracking-[0.3em] text-purple-200">Stellenbosch University Developer Society</div>
+            </div>
+          </div>
+        );
+      }
       default:
         return null;
     }
@@ -555,6 +579,9 @@ export default function DisplayPage() {
               className={`absolute inset-0 mix-blend-screen opacity-70 bg-gradient-to-br ${accent.from} ${accent.via} ${accent.to}`}
             />
             <div className="relative z-10 w-full h-full">{renderDisplay(selected)}</div>
+            <div className="absolute left-4 bottom-4 z-[200] pointer-events-none">
+              <Image src="/logo_white.svg" alt="SUDS logo" width={270} height={108} className="h-[72px] w-auto" />
+            </div>
           </div>
         </div>
       </main>
