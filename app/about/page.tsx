@@ -84,6 +84,22 @@ export default function About() {
             </div>
 
             {/* Focus areas */}
+            <section className="mt-16 text-center space-y-3">
+              <p className="text-xs uppercase tracking-[0.3em] text-purple-300">Starter Guide</p>
+              <h2 className="text-3xl font-bold text-white sm:text-4xl">Get Started with Computer Science Guide</h2>
+              <p className="text-gray-400 max-w-3xl mx-auto">
+                Learn the basics: set up GitHub, pick an IDE, build your first portfolio site, and polish your LinkedIn presence. Dive into the detailed guide below.
+              </p>
+              <div className="flex justify-center">
+                <Link
+                  href="/guide"
+                  className="border border-purple-600 px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-purple-100 hover:border-purple-400 transition"
+                >
+                  Open Guide
+                </Link>
+              </div>
+            </section>
+
             <section className="mt-16">
               <div className="text-center space-y-2">
                 <h2 className="text-3xl font-bold text-white sm:text-4xl">
