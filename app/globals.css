@@ -63,3 +63,16 @@ body {
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+@keyframes slow-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-slow-spin {
+  animation: slow-spin 36s linear infinite;
+}
