@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useLanguage, Language } from "../context/LanguageContext";
+import Image from "next/image";
 
 const languages: { code: Language; label: string }[] = [
   { code: "en", label: "EN" },
@@ -28,12 +29,13 @@ export default function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo - Full White */}
           <Link href="/" className="flex items-center group">
-            <h1 className="text-2xl font-bold tracking-wider sm:text-3xl">
-              <span className="text-white transition-colors group-hover:text-purple-300">S</span>
-              <span className="text-white transition-colors group-hover:text-purple-200">U</span>
-              <span className="text-white transition-colors group-hover:text-purple-300">D</span>
-              <span className="text-white transition-colors group-hover:text-purple-200">S</span>
-            </h1>
+            <Image
+              src="/logo.svg"
+              alt="Stellenbosch University Developer Society Logo"
+              width={160}
+              height={40}
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
