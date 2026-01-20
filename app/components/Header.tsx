@@ -20,6 +20,7 @@ export default function Header() {
     { name: t("nav.home"), href: "/" },
     { name: t("nav.about"), href: "/about" },
     { name: t("nav.events"), href: "/events" },
+    { name: t("nav.projects"), href: "/projects" },
     { name: t("nav.membership"), href: "https://membership.devsoc.co.za", external: true },
   ];
 

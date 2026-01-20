@@ -21,7 +21,7 @@ interface Snake {
 
 interface ElectricGridProps {
   showLines?: boolean;
-  color?: "purple" | "blue" | "green";
+  color?: "purple" | "blue" | "green" | "red";
 }
 
 const GRID_SIZE = 50;
@@ -35,7 +35,7 @@ const getColorValues = (color: string) => {
       return { hex: "#22c55e", rgb: "34, 197, 94" };
     case "purple":
     default:
-      return { hex: "#9333ea", rgb: "147, 51, 234" };
+      return { hex: "#9333ea", rgb: "147, 51, 234" };      
   }
 };
 
@@ -289,6 +289,8 @@ export default function ElectricGrid({ showLines = true, color = "purple" }: Ele
           ? "linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #0a0a0a 100%)"
           : color === "blue"
           ? "linear-gradient(135deg, #0a0a0a 0%, #0a1a2e 50%, #0a0a0a 100%)"
+          : color === "red"
+          ? "linear-gradient(135deg, #0a0a0a 0%, #2e0a0a 50%, #0a0a0a 100%)"
           : "linear-gradient(135deg, #0a0a0a 0%, #0a2e1a 50%, #0a0a0a 100%)",
       }}
     >

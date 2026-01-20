@@ -29,6 +29,11 @@ export const translations: Translations = {
     af: "Geleenthede",
     xh: "Iziganeko",
   },
+  "nav.projects": {
+    en: "Projects",
+    af: "Projekte",
+    xh: "Iiprojekthi",
+  },
   "nav.membership": {
     en: "Membership",
     af: "Lidmaatskap",
@@ -171,6 +176,42 @@ export const translations: Translations = {
     en: "Every Wednesday",
     af: "Elke Woensdag",
     xh: "NgoLwesithathu Ngamnye",
+  },
+
+  // Projects page
+  "projects.title": {
+    en: "Projects",
+    af: "Projekte",
+    xh: "Iiprojekthi",
+  },
+
+  "projects.project-one-title": {
+    en: "DevSoc Ticket Management System",
+    af: "DevSoc Kaartjiebestuurstelsel",
+    xh: "DevSoc Inkqubo yoLawulo lwamaTikiti",
+  },
+
+  "projects.project-one-description": {
+    en: "An internally developed ticketing platform for managing event registrations, digital tickets, and attendee check-ins.",
+    af: "'n Intern ontwikkelde kaartjieplatform vir die bestuur van geleentheidsregistrasies, digitale kaartjies en bywoners se inskrywings.",
+    xh: "Iqonga lokuthengisa amatikiti eliphuhliswe ngaphakathi lokulawula ubhaliso lweziganeko, amatikiti edijithali, kunye nokungena kwabantu abakhoyo.",
+  },
+
+  "projects.view-project": {
+    en: "View Project",
+    af: "Bekyk Na Die Projek",
+    xh: "Jonga iProjekthi",
+  },
+
+  "projects.suggest": {
+    en: "Want to suggest a project idea or want to have your project here?",
+    af: "Wil jy 'n projekidee voorstel of jou projek hier hê?",
+    xh: "Ufuna ukuphakamisa ingcinga yeprojekthi okanye ufuna ukuba neprojekthi yakho apha?",
+  },
+  "projects.contactUs": {
+    en: "Contact Us",
+    af: "Kontak Ons",
+    xh: "Qhagamshelana Nathi",
   },
 
   // Footer
