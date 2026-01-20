@@ -88,6 +88,21 @@ export const translations: Translations = {
     af: "Ons Missie",
     xh: "Injongo Yethu",
   },
+  "about.focusAreasTitle": {
+    en: "Our Focus Areas",
+    af: "Ons Fokusareas",
+    xh: "Imimandla yethu ephambili",
+  },
+  "about.focusAreasSubtitle": {
+    en: "Where we dig deep, build together, and ship meaningful student projects.",
+    af: "Waar ons diep delf, saam bou en betekenisvolle studenteprojekte lewer.",
+    xh: "Apho singena nzulu, sakha kunye, kwaye sithumela iiprojekthi ezifanelekileyo zabafundi.",
+  },
+  "about.focusAreasTagline": {
+    en: "Student-led builds, meetups, and challenges in this track.",
+    af: "Student-geleide bouprojekte, byeenkomste en uitdagings in hierdie baan.",
+    xh: "Iiprojekthi ezikhokelwa ngabafundi, iintlanganiso, kunye nemingeni kule ndlela.",
+  },
   "about.vision": {
     en: "To be the leading student tech community in South Africa, empowering the next generation of developers.",
     af: "Om die voorste studente-tegnologiegemeenskap in Suid-Afrika te wees, wat die volgende generasie ontwikkelaars bemagtig.",

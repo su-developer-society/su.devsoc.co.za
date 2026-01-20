@@ -96,6 +96,14 @@ export default function Footer() {
               </li>
               <li>
                 <a
+                  href="/display"
+                  className="text-sm text-gray-400 transition-all duration-200 hover:text-purple-400 hover:pl-2"
+                >
+                  Display
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://membership.devsoc.co.za"
                   target="_blank"
                   rel="noopener noreferrer"
