@@ -44,36 +44,33 @@ export default function Events() {
             {t("events.subtitle")}
           </p>
 
-          <div className="space-y-6">
-            {events.map((event, index) => (
-              <div
-                key={index}
-                className="group border border-green-900/50 bg-black/50 p-6 backdrop-blur-sm transition-all duration-300 hover:border-green-600/50 hover:bg-black/70"
-              >
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-semibold text-white group-hover:text-green-400 transition-colors">
-                        {t(event.titleKey)}
-                      </h3>
-                      <span
-                        className={`px-2 py-1 text-xs font-medium ${
-                          event.status === "upcoming"
-                            ? "bg-green-600/20 text-green-400"
-                            : "bg-green-600/20 text-green-400"
-                        }`}
-                      >
-                        {event.status === "upcoming" ? t("events.upcoming") : t("events.ongoing")}
-                      </span>
-                    </div>
-                    <p className="text-gray-400">{t(event.descriptionKey)}</p>
-                  </div>
-                  <div className="text-sm font-medium text-green-400 whitespace-nowrap">
-                    {event.date}
-                  </div>
-                </div>
-              </div>
-            ))}
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            maxWidth: "100%",
+            paddingBottom: "75%", // aspect ratio (4:3)
+            height: 0,
+            overflow: "hidden",
+            borderRadius: "4px",
+          }}
+          >
+            <iframe
+              src="https://luma.com/embed/calendar/cal-Zk4I2aeGtiv82CP/events"
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                border: "1px solid #bfcbda88",
+                borderRadius: "4px",
+              }}
+              frameBorder={0}
+              allowFullScreen
+              aria-hidden="false"
+              tabIndex={0}
+            />
           </div>
 
           <div className="mt-12 text-center">
