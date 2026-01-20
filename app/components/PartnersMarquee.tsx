@@ -27,6 +27,7 @@ export default function PartnersMarquee() {
   const dragDistanceRef = useRef(0);
   const startXRef = useRef(0);
   const startScrollRef = useRef(0);
+  const pointerInsideRef = useRef(false);
   const partners = useMemo(
     () => Array.from({ length: REPEAT_COUNT }, () => PARTNERS).flat(),
     []
@@ -139,8 +140,8 @@ export default function PartnersMarquee() {
   const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
     const container = scrollRef.current;
     if (!container) return;
-    pausedRef.current = false;
     isDraggingRef.current = false;
+    pausedRef.current = pointerInsideRef.current;
     container.classList.remove("cursor-grabbing");
     if (Math.abs(dragDistanceRef.current) > 3) {
       event.preventDefault();
@@ -164,7 +165,15 @@ export default function PartnersMarquee() {
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
-        onPointerLeave={handlePointerUp}
+        onPointerLeave={(event) => {
+          pointerInsideRef.current = false;
+          handlePointerUp(event);
+          play();
+        }}
+        onPointerEnter={() => {
+          pointerInsideRef.current = true;
+          pause();
+        }}
         onMouseEnter={pause}
         onMouseLeave={play}
         onTouchStart={pause}
