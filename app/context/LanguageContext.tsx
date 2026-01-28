@@ -71,6 +71,18 @@ export const translations: Translations = {
     af: "Bly op hoogte van gebeure, projekte en geleenthede",
     xh: "Hlala unolwazi ngeziganeko, iiprojekthi, kunye namathuba",
   },
+  "home.eventsSectionHeading": {
+    en: "Upcoming Events",
+    af: "Komende Geleenthede",
+    xh: "Iziganeko Ezizayo",
+  },
+  "home.eventsSectionSubHeading": {
+    en: "Find the latest upcoming events at the Developer Society",
+    af: "Vind die nuutste komende geleenthede by die Ontwikkelaarsvereniging",
+    xh: "Fumana iziganeko ezizayo zamva nje kwi-Developer Society",
+  },
+
+  
 
 
   // About page
@@ -156,52 +168,43 @@ export const translations: Translations = {
     af: "Kontak ons",
     xh: "Qhagamshelana nathi",
   },
+  "events.registerButton": {
+    en: "Register Now",
+    af: "Registreer Nou",
+    xh: "Bhalisa ngoku",
+  },
+  "events.joinButton": {
+    en: "Join Now",
+    af: "Sluit Nou Aan",
+    xh: "Ngena ngoku",
+  },
+  "events.ViewDetailsButton": {
+    en: "View Details",
+    af: "Bekyk Besonderhede",
+    xh: "Jonga iinkcukacha",
+  },
+  "events.liveEvent": {
+    en: "LIVE NOW",
+    af: "LIVE NOU",
+    xh: "PHILA NGOKU",
+  },
+  "events.nextEvent": {
+    en: "NEXT EVENT",
+    af: "VOLGENDE GEBEURTENIS",
+    xh: "ISIGANEKO ESILANDELAYO",
+  },
+  
 
   // Events items
-  "events.hackathon.title": {
-    en: "Hackathon 2026",
-    af: "Hackathon 2026",
-    xh: "I-Hackathon 2026",
+  "events.welcoming-event-26-title": {
+    en: "Welcoming Event 2026",
+    af: "Verwelkomingsgeleentheid 2026",
+    xh: "Umsitho Wokwamkela ka-2026",
   },
-  "events.hackathon.description": {
-    en: "Our annual 48-hour hackathon where teams compete to build innovative solutions.",
-    af: "Ons jaarlikse 48-uur hackathon waar spanne meeding om innoverende oplossings te bou.",
-    xh: "I-hackathon yethu yonyaka yeeyure ezingama-48 apho amaqela akhuphisana ukwakha izisombululo ezintsha.",
-  },
-  "events.hackathon.date": {
-    en: "Coming Soon",
-    af: "Binnekort",
-    xh: "Iyeza Kwakamsinya",
-  },
-  "events.techTalks.title": {
-    en: "Tech Talks Series",
-    af: "Tegnologie-praatjiesreeks",
-    xh: "Uthotho Lweentetho Zezobuchwepheshe",
-  },
-  "events.techTalks.description": {
-    en: "Industry professionals share insights on the latest technologies and career advice.",
-    af: "Bedryfskundiges deel insigte oor die nuutste tegnologieë en loopbaanadvies.",
-    xh: "Abasebenzi boshishino babelana ngolwazi ngezinto ezintsha zobuchwepheshe kunye neengcebiso zomsebenzi.",
-  },
-  "events.techTalks.date": {
-    en: "Monthly",
-    af: "Maandeliks",
-    xh: "Nyanga Nganye",
-  },
-  "events.workshops.title": {
-    en: "Workshop Wednesdays",
-    af: "Werkswinkel-Woensdae",
-    xh: "Ii-Workshop ZangoLwesithathu",
-  },
-  "events.workshops.description": {
-    en: "Weekly hands-on workshops covering various programming languages and frameworks.",
-    af: "Weeklikse praktiese werkswinkels wat verskeie programmeertale en raamwerke dek.",
-    xh: "Iworkshops zeveki ezibandakanya iilwimi ezahlukeneyo zokwenza iinkqubo kunye nezakhelo.",
-  },
-  "events.workshops.date": {
-    en: "Every Wednesday",
-    af: "Elke Woensdag",
-    xh: "NgoLwesithathu Ngamnye",
+  "events.welcoming-event-26-description": {
+    en: "Join us for our official opening event for 2026. Get an introduction into the society, learn tips and tricks to help elevate yourself in the IT Space and enjoy some Pizza while connecting with people with a shared goal",
+    af: "Sluit by ons aan vir ons amptelike openingsgeleentheid vir 2026. Kry 'n inleiding tot die samelewing, leer wenke en truuks om jouself in die IT-ruimte te verhef en geniet 'n bietjie pizza terwyl jy met mense met 'n gedeelde doelwit skakel.",
+    xh: "Joyina nathi kumsitho wethu wokuvula ngokusesikweni ka-2026. Fumana intshayelelo kuluntu, funda iingcebiso kunye namaqhinga okukunceda uziphakamise kwi-IT Space kwaye wonwabele iPizza ngelixa unxibelelana nabantu abanomgomo ofanayo.",
   },
 
   // Projects page

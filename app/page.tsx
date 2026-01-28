@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import PartnersMarquee from "./components/PartnersMarquee";
 import { useLanguage } from "./context/LanguageContext";
 import CommunityBanner from "./components/CommunityBanner";
+import NextEventBanner from "./components/NextEventBanner";
 
 export default function Home() {
   const { t } = useLanguage();
@@ -32,7 +33,7 @@ export default function Home() {
       </section>
 
       {/* Partners Section - solid black background */}
-      <section className="relative z-10 py-24 px-6 bg-black">
+      <section className="relative z-10 py-24 px-6 border-t border-purple-900/30 bg-black">
         <div className="mx-auto max-w-7xl">
           <h2 className="text-center text-3xl font-bold text-white mb-4 sm:text-4xl">
             {t("home.partners")}
@@ -46,9 +47,23 @@ export default function Home() {
       </section>
 
       {/* Instagram and WhatsApp Section - solid black background */}
-      <section className="relative z-10 py-24 px-6 bg-black">
+      <section className="relative z-10 py-24 px-6 border-t border-purple-900/30 bg-black">
         <div className="mx-auto max-w-7xl">
           <CommunityBanner />
+        </div>
+      </section>
+
+      {/* Upcoming Events Section - solid black background */}
+      <section className="relative z-10 py-24 px-6 border-t border-purple-900/30 bg-black">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="text-center text-3xl font-bold text-white mb-4 sm:text-4xl">
+            {t("home.eventsSectionHeading")}
+          </h2>
+          <p className="text-center text-gray-500 mb-12">
+            {t("home.eventsSectionSubHeading")}
+          </p>
+
+          <NextEventBanner />
         </div>
       </section>
 

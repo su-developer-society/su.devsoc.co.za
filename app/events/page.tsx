@@ -4,30 +4,12 @@ import ElectricGrid from "../components/ElectricGrid";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useLanguage } from "../context/LanguageContext";
+import { getAllEvents } from "../lib/eventUtils";
+import EventCard from "../components/EventCard";
 
 export default function Events() {
   const { t } = useLanguage();
-
-  const events = [
-    {
-      titleKey: "events.hackathon.title",
-      date: t("events.hackathon.date"),
-      descriptionKey: "events.hackathon.description",
-      status: "upcoming" as const,
-    },
-    {
-      titleKey: "events.techTalks.title",
-      date: t("events.techTalks.date"),
-      descriptionKey: "events.techTalks.description",
-      status: "ongoing" as const,
-    },
-    {
-      titleKey: "events.workshops.title",
-      date: t("events.workshops.date"),
-      descriptionKey: "events.workshops.description",
-      status: "ongoing" as const,
-    },
-  ];
+  const events = getAllEvents();
 
   return (
     <div className="relative min-h-screen font-sans">
@@ -44,34 +26,11 @@ export default function Events() {
             {t("events.subtitle")}
           </p>
 
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            maxWidth: "100%",
-            paddingBottom: "75%", // aspect ratio (4:3)
-            height: 0,
-            overflow: "hidden",
-            borderRadius: "4px",
-          }}
-          >
-            <iframe
-              src="https://luma.com/embed/calendar/cal-Zk4I2aeGtiv82CP/events"
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                border: "1px solid #bfcbda88",
-                borderRadius: "4px",
-              }}
-              frameBorder={0}
-              allowFullScreen
-              aria-hidden="false"
-              tabIndex={0}
-            />
-          </div>
+        <div className="grid gap-6 md:grid-cols-2">
+        {events.map(event => (
+          <EventCard key={event.id} event={event} />
+        ))}
+        </div>
 
           <div className="mt-12 text-center">
             <p className="text-gray-500">
