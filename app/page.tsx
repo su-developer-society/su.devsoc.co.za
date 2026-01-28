@@ -60,10 +60,12 @@ export default function Home() {
             {t("home.eventsSectionHeading")}
           </h2>
           <p className="text-center text-gray-500 mb-12">
-            {t("home.eventsSectionSubHeading")}
+            {t("home.eventsSectionHeading")}
           </p>
 
-          <NextEventBanner />
+          <div className="w-full flex justify-center">
+            <NextEventBanner />
+          </div>
         </div>
       </section>
 
