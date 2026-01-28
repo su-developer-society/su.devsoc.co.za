@@ -1,15 +1,18 @@
 import Link from "next/link";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function CommunityBanner() {
+    const { t } = useLanguage();
+
   return (
     <div className="w-full bg-gradient-to-r from-purple-600 to-green-500 text-white rounded-xl shadow-lg">
       <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
           <h3 className="text-xl font-bold">
-            Join our Developer Community 🚀
+            {t("home.communityBannerHeading")}
           </h3>
           <p className="text-sm opacity-90">
-            Stay in the loop on events, projects, and opportunities.
+            {t("home.communityBannerSubHeading")}
           </p>
         </div>
 
