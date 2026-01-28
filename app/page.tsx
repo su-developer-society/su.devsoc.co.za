@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import PartnersMarquee from "./components/PartnersMarquee";
 import { useLanguage } from "./context/LanguageContext";
+import CommunityBanner from "./components/CommunityBanner";
 
 export default function Home() {
   const { t } = useLanguage();
@@ -41,6 +42,13 @@ export default function Home() {
           </p>
 
           <PartnersMarquee />
+        </div>
+      </section>
+
+      {/* Instagram and WhatsApp Section - solid black background */}
+      <section className="relative z-10 py-24 px-6 bg-black">
+        <div className="mx-auto max-w-7xl">
+          <CommunityBanner />
         </div>
       </section>
 
