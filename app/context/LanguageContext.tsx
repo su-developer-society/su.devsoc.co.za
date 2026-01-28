@@ -61,6 +61,17 @@ export const translations: Translations = {
     af: "Organisasies wat ons missie ondersteun",
     xh: "Imibutho exhasa injongo yethu",
   },
+  "home.communityBannerHeading": {
+    en: "Join our Developer Community 🚀",
+    af: "Sluit aan by ons Ontwikkelaarsgemeenskap 🚀",
+    xh: "Joyina uluntu lwethu lwabaphuhlisi 🚀",
+  },
+  "home.communityBannerSubHeading": {
+    en: "Stay in the loop on events, projects, and opportunities",
+    af: "Bly op hoogte van gebeure, projekte en geleenthede",
+    xh: "Hlala unolwazi ngeziganeko, iiprojekthi, kunye namathuba",
+  },
+
 
   // About page
   "about.title": {
