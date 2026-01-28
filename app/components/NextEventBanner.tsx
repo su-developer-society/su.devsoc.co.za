@@ -51,7 +51,7 @@ export default function NextEventBanner() {
       </div>
 
       {/* Overlay content */}
-      <div className="absolute inset-0 flex items-end absolute inset-0 flex items-end justify-center">
+      <div className="absolute inset-0 flex items-end justify-center">
         <div className="w-full px-4 pb-4 sm:px-6 sm:pb-6 md:px-10 md:pb-10">
           <div className="max-w-4xl text-white">
             <span
