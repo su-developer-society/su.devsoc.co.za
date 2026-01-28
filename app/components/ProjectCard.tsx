@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Project } from "../lib/projects";
 import { useLanguage } from "../context/LanguageContext";
