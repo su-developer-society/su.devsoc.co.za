@@ -39,6 +39,11 @@ export const translations: Translations = {
     af: "Lidmaatskap",
     xh: "Ubulungu",
   },
+  "nav.bittybird": {
+    en: "BittyBird",
+    af: "BittyBird",
+    xh: "BittyBird",
+  },
 
   // Home page
   "home.title": {

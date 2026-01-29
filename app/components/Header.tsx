@@ -21,6 +21,7 @@ export default function Header() {
     { name: t("nav.about"), href: "/about" },
     { name: t("nav.events"), href: "/events" },
     { name: t("nav.projects"), href: "/projects" },
+    { name: t("nav.bittybird"), href: "https://bittybird.devsoc.co.za", external: true },
     { name: t("nav.membership"), href: "https://membership.devsoc.co.za", external: true },
   ];
 
