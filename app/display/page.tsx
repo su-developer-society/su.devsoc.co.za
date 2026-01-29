@@ -11,6 +11,7 @@ type DisplayMode =
   | "phrases"
   | "partnersA"
   | "partnersB"
+  | "partnerSingle"
   | "gridPulse"
   | "code"
   | "pillar"
@@ -27,7 +28,12 @@ type DisplayOption = {
   accent?: { from: string; via: string; to: string };
 };
 
-const partnerLogos = [
+type PartnerLogo = {
+  src: string;
+  alt: string;
+};
+
+const partnerLogos: PartnerLogo[] = [
   { src: "/orange.svg", alt: "Orange Cyberdefense" },
   { src: "/taptic.svg", alt: "TAPTIC" },
   { src: "/sun_cs.svg", alt: "SUN Computer Science" },
@@ -144,6 +150,13 @@ const displayOptions: DisplayOption[] = [
     accent: { from: "from-teal-400/30", via: "via-purple-500/20", to: "to-pink-400/25" },
   },
   {
+    id: "partner-single",
+    label: "Partner Select",
+    description: "Lock one partner on screen; click preview to choose.",
+    mode: "partnerSingle",
+    accent: { from: "from-emerald-400/30", via: "via-purple-500/20", to: "to-blue-400/20" },
+  },
+  {
     id: "grid-pulse",
     label: "Grid Pulse",
     description: "Animated grid with SUDS tagline.",
@@ -243,6 +256,7 @@ export default function DisplayPage() {
   const [partnerTextIndex, setPartnerTextIndex] = useState(0);
   const [gridLineIndex, setGridLineIndex] = useState(0);
   const [codeIndex, setCodeIndex] = useState(0);
+  const [lockedPartner, setLockedPartner] = useState<PartnerLogo>(partnerLogos[0]);
   const [typedTarget, setTypedTarget] = useState("");
   const [typedText, setTypedText] = useState("");
   const [dvdPos, setDvdPos] = useState({ x: 80, y: 80 });
@@ -285,6 +299,7 @@ export default function DisplayPage() {
   const currentTypedSource = useMemo(() => {
     if (selected.mode === "phrases") return phrases[phraseIndex];
     if (selected.mode === "logoMode") return phrases[phraseIndex];
+    if (selected.mode === "partnerSingle") return `Pinned: ${lockedPartner.alt}`;
     if (selected.mode === "pillar" && selected.pillar) {
       const rotating = selected.pillar.lines[(phraseIndex + selected.pillar.title.length) % selected.pillar.lines.length];
       return `${selected.pillar.title} — ${rotating}`;
@@ -304,7 +319,7 @@ export default function DisplayPage() {
       return codeSnippets[codeIndex].join("\n");
     }
     return "";
-  }, [selected, phraseIndex, pillarCycleIndex, partnerTextIndex, gridLineIndex, codeIndex]);
+  }, [selected, phraseIndex, pillarCycleIndex, partnerTextIndex, gridLineIndex, codeIndex, lockedPartner]);
 
   useEffect(() => {
     setTypedTarget(currentTypedSource);
@@ -431,6 +446,44 @@ export default function DisplayPage() {
               {typedText || partnerPhrases[partnerTextIndex]}
               {cursor}
             </div>
+          </div>
+        );
+      case "partnerSingle":
+        return (
+          <div className="flex h-full flex-col items-center justify-center gap-6 text-center">
+            <div className="text-xs uppercase tracking-[0.35em] text-purple-300">Partner · Locked</div>
+            <div className="bg-black/60 border border-emerald-700/70 px-8 py-6 rounded-lg shadow-inner">
+              <Image
+                src={lockedPartner.src}
+                alt={lockedPartner.alt}
+                width={360}
+                height={140}
+                className="h-24 w-auto object-contain drop-shadow-[0_0_22px_rgba(16,185,129,0.45)]"
+              />
+              <div className="mt-3 text-sm text-purple-200">
+                {typedText || `Pinned: ${lockedPartner.alt}`}
+                {cursor}
+              </div>
+            </div>
+            <div className="w-full max-w-2xl grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {partnerLogos.map((logo) => {
+                const active = logo.src === lockedPartner.src;
+                return (
+                  <button
+                    key={logo.src}
+                    onClick={() => setLockedPartner(logo)}
+                    className={`flex h-20 items-center justify-center border bg-black/60 transition ${
+                      active
+                        ? "border-emerald-500 bg-emerald-900/30 shadow-[0_0_30px_rgba(16,185,129,0.35)]"
+                        : "border-purple-800 hover:border-emerald-400 hover:bg-emerald-900/15"
+                    }`}
+                  >
+                    <Image src={logo.src} alt={logo.alt} width={220} height={90} className="h-16 w-auto object-contain" />
+                  </button>
+                );
+              })}
+            </div>
+            <div className="text-[11px] text-gray-400">Click a logo to keep it on screen; cycling is paused in this mode.</div>
           </div>
         );
       case "gridPulse":
