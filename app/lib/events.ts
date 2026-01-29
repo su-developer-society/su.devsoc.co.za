@@ -15,7 +15,7 @@ export const events: Event[] = [
     description: "events.welcoming-event-26-description",
     startDate: "2026-02-20T17:30:00+02:00",
     endDate: "2026-02-20T21:30:00+02:00",
-    link: "https://tms.devsoc.co.za/events/Jv7s1kKdm9jA1EgZkFSz/preview",
+    link: "https://forms.cloud.microsoft/r/g8yESKdz92",
     image: "/events/welcoming-event-26.png",
   },
 ];
