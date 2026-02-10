@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { QRCodeSVG } from "qrcode.react";
 import ElectricGrid from "../components/ElectricGrid";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -384,13 +385,34 @@ export default function DisplayPage() {
     switch (option.mode) {
       case "phrases":
         return (
-          <div className="flex h-full flex-col items-center justify-center gap-6 text-center">
-            <div className="text-xs uppercase tracking-[0.35em] text-purple-300">SUDS</div>
-            <div className="text-4xl sm:text-5xl font-bold text-white transition-all duration-700">
-              {typedText}
-              {cursor}
+          <div className="relative h-full w-full overflow-hidden flex items-center justify-center">
+            <div className="absolute inset-0 overflow-hidden">
+              {/* Purple blob 1 - dark purple */}
+              <div className="absolute top-[5%] left-[10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(88,28,135,0.5)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-1 18s ease-in-out infinite' }} />
+              {/* Purple blob 2 - vivid purple */}
+              <div className="absolute top-[45%] left-[55%] w-[55%] h-[55%] rounded-full bg-[radial-gradient(circle,rgba(126,34,206,0.45)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-2 22s ease-in-out infinite' }} />
+              {/* Purple blob 3 - deep violet */}
+              <div className="absolute top-[25%] left-[35%] w-[65%] h-[65%] rounded-full bg-[radial-gradient(circle,rgba(76,29,149,0.4)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-3 26s ease-in-out infinite' }} />
+              {/* Purple blob 4 - medium purple */}
+              <div className="absolute top-[55%] left-[15%] w-[50%] h-[50%] rounded-full bg-[radial-gradient(circle,rgba(109,40,217,0.38)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-4 20s ease-in-out infinite' }} />
+              {/* Blue-purple blob 1 */}
+              <div className="absolute top-[15%] left-[60%] w-[50%] h-[50%] rounded-full bg-[radial-gradient(circle,rgba(67,56,202,0.35)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-5 24s ease-in-out infinite' }} />
+              {/* Blue-purple blob 2 */}
+              <div className="absolute top-[65%] left-[40%] w-[45%] h-[45%] rounded-full bg-[radial-gradient(circle,rgba(79,70,229,0.32)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-4 28s ease-in-out infinite reverse' }} />
+              {/* Red accent - fades in and out */}
+              <div className="absolute top-[35%] left-[25%] w-[45%] h-[45%] rounded-full bg-[radial-gradient(circle,rgba(220,38,38,0.45)_0%,transparent_65%)] blur-3xl" style={{ animation: 'blob-drift-red 30s ease-in-out infinite' }} />
+              {/* Light blue accent - fades in and out */}
+              <div className="absolute top-[20%] left-[65%] w-[40%] h-[40%] rounded-full bg-[radial-gradient(circle,rgba(147,197,253,0.38)_0%,transparent_65%)] blur-3xl" style={{ animation: 'blob-drift-blue 30s ease-in-out infinite' }} />
             </div>
-            <div className="text-sm text-gray-400">Stellenbosch University Developer Society</div>
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:70px_70px] opacity-40" />
+            <div className="relative flex flex-col items-center justify-center gap-6 text-center">
+              <div className="text-xs uppercase tracking-[0.35em] text-purple-300">SUDS</div>
+              <div className="text-4xl sm:text-5xl font-bold text-white transition-all duration-700">
+                {typedText}
+                {cursor}
+              </div>
+              <div className="text-sm text-gray-400">Stellenbosch University Developer Society</div>
+            </div>
           </div>
         );
       case "pillarsCycle": {
@@ -635,6 +657,24 @@ export default function DisplayPage() {
             <div className="absolute left-4 bottom-4 z-[200] pointer-events-none">
               <Image src="/logo_white.svg" alt="SUDS logo" width={270} height={108} className="h-[72px] w-auto" />
             </div>
+            {selected.mode === "phrases" && (
+              <>
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[200] pointer-events-none">
+                  <span className="text-white/80 text-sm font-medium tracking-wide">su.devsoc.co.za</span>
+                </div>
+                <div className="absolute right-4 bottom-4 z-[200]">
+                  <a href="https://www.instagram.com/sudevsoc/" target="_blank" rel="noopener noreferrer">
+                    <QRCodeSVG
+                      value="https://www.instagram.com/sudevsoc/"
+                      size={216}
+                      bgColor="transparent"
+                      fgColor="#ffffff"
+                      level="M"
+                    />
+                  </a>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </main>
