@@ -1,6 +1,7 @@
 "use client";
 
 import { useLanguage } from "../context/LanguageContext";
+import { Instagram, Linkedin } from "lucide-react";
 
 const serviceLinks = [
   { name: "Network", url: "https://network.devsoc.co.za" },
@@ -14,6 +15,11 @@ const resourceLinks = [
   { nameKey: "footer.policy", url: "https://policy.devsoc.co.za" },
   { nameKey: "footer.serviceDesk", url: "https://servicedesk.devsoc.co.za" },
   { nameKey: "footer.legacySite", url: "https://legacy.su.devsoc.co.za" },
+];
+
+const socialLinks = [
+  { name: "Instagram", url: "https://www.instagram.com/sudevsoc/", Icon: Instagram },
+  { name: "LinkedIn", url: "https://www.linkedin.com/company/110893015/", Icon: Linkedin },
 ];
 
 export default function Footer() {
@@ -34,6 +40,22 @@ export default function Footer() {
             <p className="text-sm text-gray-400 leading-relaxed">
               {t("footer.description")}
             </p>
+
+            <div className="mt-4 flex items-center gap-3">
+              {socialLinks.map(({ name, url, Icon }) => (
+                <a
+                  key={url}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={name}
+                  className="group inline-flex h-10 w-10 items-center justify-center rounded-full border border-purple-900/50 bg-white/5 text-gray-300 transition hover:-translate-y-1 hover:border-purple-500/60 hover:text-purple-300"
+                >
+                  <Icon className="h-5 w-5 transition group-hover:scale-110" />
+                  <span className="sr-only">{name}</span>
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Services */}
