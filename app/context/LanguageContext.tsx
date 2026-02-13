@@ -211,6 +211,16 @@ export const translations: Translations = {
     af: "Sluit by ons aan vir ons amptelike openingsgeleentheid vir 2026. Kry 'n inleiding tot die samelewing, leer wenke en truuks om jouself in die IT-ruimte te verhef en geniet 'n bietjie pizza terwyl jy met mense met 'n gedeelde doelwit skakel.",
     xh: "Joyina nathi kumsitho wethu wokuvula ngokusesikweni ka-2026. Fumana intshayelelo kuluntu, funda iingcebiso kunye namaqhinga okukunceda uziphakamise kwi-IT Space kwaye wonwabele iPizza ngelixa unxibelelana nabantu abanomgomo ofanayo.",
   },
+  "events.div-and-conquer-title": {
+    en: "Div & Conquer WebDev Hackathon 2026",
+    af: "Div & Conquer WebDev Hackathon 2026",
+    xh: "Div & Conquer WebDev i-Hackathon 2026",
+  },
+  "events.div-and-conquer-description": {
+    en: "Join us for the 2026 Div & Conquer Web Developemtn Hackathon. Whether you're a novice CS Student with a dream a WordPress Wizzard or a Web Master, this Hackathon is for you to flex your skill. With R8000 up for grabs, do you have what it takes?",
+    af: "Sluit by ons aan vir die 2026 Div & Conquer Webontwikkeling Hackathon. Of jy nou 'n beginner rekenaarwetenskapstudent met 'n droom van 'n WordPress-towenaar of 'n webmeester is, hierdie Hackathon is vir jou om jou vaardighede te ontwikkel. Met R8000 op die spel, het jy wat dit verg?",
+    xh: "Joyina nathi kwi-2026 Div & Conquer Web Developemtn Hackathon. Nokuba ungumfundi we-CS osaqalayo onephupha lokuba yiWizzard yeWordPress okanye yiWeb Master, le Hackathon yenzelwe wena ukuze uguqule isakhono sakho. Nge-R8000 onokuyifumana, ngaba unayo into oyifunayo?",
+  },
 
   // Projects page
   "projects.title": {
