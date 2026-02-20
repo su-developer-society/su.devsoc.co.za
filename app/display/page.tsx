@@ -18,7 +18,8 @@ type DisplayMode =
   | "pillar"
   | "pillarsCycle"
   | "dvd"
-  | "logoMode";
+  | "logoMode"
+  | "welcoming";
 
 type DisplayOption = {
   id: string;
@@ -185,8 +186,56 @@ const displayOptions: DisplayOption[] = [
     mode: "logoMode",
     accent: { from: "from-purple-500/25", via: "via-indigo-500/15", to: "to-fuchsia-500/25" },
   },
+  {
+    id: "welcoming",
+    label: "Welcoming Event",
+    description: "Welcoming event · 20 Feb 2026 · shuffled slides.",
+    mode: "welcoming" as DisplayMode,
+    accent: { from: "from-purple-500/30", via: "via-indigo-500/20", to: "to-fuchsia-500/25" },
+  },
   ...pillarScreens,
 ];
+
+/* ---- Welcoming Event slides ---- */
+type WelcomingSlide = { title: string; subtitle?: string };
+
+const welcomingSlides: WelcomingSlide[] = [
+  { title: "Welcome to Developer Society", subtitle: "Developer Society Welcoming Event" },
+  { title: "Stephen Carter", subtitle: "Chairman of Stellenbosch University Developer Society" },
+  { title: "Christiaan Mc Donald", subtitle: "Secretary of Stellenbosch University Developer Society" },
+  { title: "Dominic De Robillard", subtitle: "Treasurer of Stellenbosch University Developer Society" },
+  { title: "Jayden van Zuydam", subtitle: "Events Coordinator of Stellenbosch University Developer Society" },
+  { title: "Ellen YaXin Kemigisha", subtitle: "Events Coordinator of Stellenbosch University Developer Society" },
+  { title: "Yes, Veer Built SA Papers" },
+  { title: "The Vice-Chair Built SA Papers, So We Forced Him To Sponsor the Event :)" },
+  { title: "Yes, Veer (The Vice Chair) Built SA Papers" },
+  { title: "Tell You Siblings To Use SA Papers", subtitle: "sapapers.co.za" },
+  { title: "SA Papers? Wait Till I Tell You About Rwanda Papers", subtitle: "rwandapapers.co.rw" },
+  { title: "The Vice-Chair of DevSoc Owns SA Papers", subtitle: "sapapers.co.za" },
+  { title: "GitHub Copilot Pro", subtitle: "R420 A Month \u2014 Free if you are a student" },
+  { title: "Gemini Pro", subtitle: "400 bucks a month, let us tell you how to get it for free" },
+  { title: "We Are Building a Next Generation Tech Community" },
+  { title: "Plz Follow Our Insta", subtitle: "@sudevsoc" },
+  { title: "40% Off Subverted Academy" },
+  { title: "Signup for DevSoc - It's Free", subtitle: "membership.devsoc.co.za" },
+  { title: "Shout Out Dr Grobler" },
+  { title: "Pizza Will Be Served After the Event", subtitle: "Hope There's Enough" },
+  { title: "There is a 100% chance you will Receive a Email From Us Later", subtitle: "devsoc@sun.ac.za" },
+  { title: "Hackethon Next Weel", subtitle: "R8000 In Cash Prizes" },
+  { title: "R8000 Cash Prize Hackathon", subtitle: "Fr 8K" },
+  { title: "Div & Conquer", subtitle: "hacakthon.devsoc.co.za" },
+  { title: "Society Fee = R0", subtitle: "Dry January? Nah Dry February" },
+  { title: "Nvidia or AMD? I Prefer A Intel GPU", subtitle: "Who Even Writes These Things" },
+];
+
+function shuffleArray<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 const phrases = [
   "Stellenbosch University Developer Society",
@@ -264,6 +313,12 @@ export default function DisplayPage() {
   const dvdVelRef = useRef({ vx: 1.6, vy: 1.3 });
   const previewRef = useRef<HTMLDivElement>(null);
 
+  /* Welcoming-event state */
+  const [welcomeOrder, setWelcomeOrder] = useState<WelcomingSlide[]>([]);
+  const [welcomeIndex, setWelcomeIndex] = useState(0);
+  const [welcomeTypedTitle, setWelcomeTypedTitle] = useState("");
+  const [welcomeTypedSub, setWelcomeTypedSub] = useState("");
+
   useEffect(() => {
     const phraseTimer = setInterval(() => {
       setPhraseIndex((i) => (i + 1) % phrases.length);
@@ -281,6 +336,8 @@ export default function DisplayPage() {
     const codeTimer = setInterval(() => {
       setCodeIndex((i) => (i + 1) % codeSnippets.length);
     }, 15000);
+    /* Shuffle welcoming slides on mount (client-only to avoid hydration mismatch) */
+    setWelcomeOrder(shuffleArray(welcomingSlides));
     return () => {
       clearInterval(phraseTimer);
       clearInterval(partnerTimer);
@@ -296,6 +353,37 @@ export default function DisplayPage() {
   );
 
   const accent = selected.accent ?? { from: "from-purple-500/20", via: "via-purple-500/10", to: "to-purple-500/20" };
+
+  /* Welcoming slide cycling & typing */
+  useEffect(() => {
+    if (selected.mode !== "welcoming" || welcomeOrder.length === 0) return;
+    const slide = welcomeOrder[welcomeIndex % welcomeOrder.length];
+    let cancelled = false;
+    let i = 0;
+    setWelcomeTypedTitle("");
+    setWelcomeTypedSub("");
+    const titleTimer = setInterval(() => {
+      if (cancelled) return;
+      i += 1;
+      setWelcomeTypedTitle(slide.title.slice(0, i));
+      if (i >= slide.title.length) {
+        clearInterval(titleTimer);
+        if (slide.subtitle) {
+          let j = 0;
+          const subTimer = setInterval(() => {
+            if (cancelled) { clearInterval(subTimer); return; }
+            j += 1;
+            setWelcomeTypedSub(slide.subtitle!.slice(0, j));
+            if (j >= slide.subtitle!.length) clearInterval(subTimer);
+          }, 35);
+        }
+      }
+    }, 45);
+    const advance = setInterval(() => {
+      setWelcomeIndex((idx) => (idx + 1) % welcomeOrder.length);
+    }, 10000);
+    return () => { cancelled = true; clearInterval(titleTimer); clearInterval(advance); };
+  }, [selected.mode, welcomeIndex, welcomeOrder]);
 
   const currentTypedSource = useMemo(() => {
     if (selected.mode === "phrases") return phrases[phraseIndex];
@@ -578,6 +666,37 @@ export default function DisplayPage() {
           </div>
         );
       }
+      case "welcoming": {
+        const slide = welcomeOrder.length > 0 ? welcomeOrder[welcomeIndex % welcomeOrder.length] : null;
+        return (
+          <div className="relative h-full w-full overflow-hidden flex items-center justify-center">
+            <div className="absolute inset-0 overflow-hidden">
+              <div className="absolute top-[5%] left-[10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(88,28,135,0.5)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-1 18s ease-in-out infinite' }} />
+              <div className="absolute top-[45%] left-[55%] w-[55%] h-[55%] rounded-full bg-[radial-gradient(circle,rgba(126,34,206,0.45)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-2 22s ease-in-out infinite' }} />
+              <div className="absolute top-[25%] left-[35%] w-[65%] h-[65%] rounded-full bg-[radial-gradient(circle,rgba(76,29,149,0.4)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-3 26s ease-in-out infinite' }} />
+              <div className="absolute top-[55%] left-[15%] w-[50%] h-[50%] rounded-full bg-[radial-gradient(circle,rgba(109,40,217,0.38)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-4 20s ease-in-out infinite' }} />
+              <div className="absolute top-[15%] left-[60%] w-[50%] h-[50%] rounded-full bg-[radial-gradient(circle,rgba(67,56,202,0.35)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-5 24s ease-in-out infinite' }} />
+              <div className="absolute top-[65%] left-[40%] w-[45%] h-[45%] rounded-full bg-[radial-gradient(circle,rgba(79,70,229,0.32)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-4 28s ease-in-out infinite reverse' }} />
+              <div className="absolute top-[35%] left-[25%] w-[45%] h-[45%] rounded-full bg-[radial-gradient(circle,rgba(220,38,38,0.45)_0%,transparent_65%)] blur-3xl" style={{ animation: 'blob-drift-red 30s ease-in-out infinite' }} />
+              <div className="absolute top-[20%] left-[65%] w-[40%] h-[40%] rounded-full bg-[radial-gradient(circle,rgba(147,197,253,0.38)_0%,transparent_65%)] blur-3xl" style={{ animation: 'blob-drift-blue 30s ease-in-out infinite' }} />
+            </div>
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:70px_70px] opacity-40" />
+            <div className="relative flex flex-col items-center justify-center gap-5 text-center px-8 max-w-5xl">
+              <div className="text-xs uppercase tracking-[0.35em] text-purple-300">SUDS — Welcoming Event · 20 Feb 2026</div>
+              <div className="text-4xl sm:text-5xl font-bold text-white transition-all duration-700 min-h-[1.3em]">
+                {welcomeTypedTitle}
+                {cursor}
+              </div>
+              {slide?.subtitle && (
+                <div className="text-lg sm:text-xl text-purple-200 min-h-[1.5em]">
+                  {welcomeTypedSub}
+                </div>
+              )}
+              <div className="text-sm text-gray-400">Stellenbosch University Developer Society</div>
+            </div>
+          </div>
+        );
+      }
       default:
         return null;
     }
@@ -657,7 +776,7 @@ export default function DisplayPage() {
             <div className="absolute left-4 bottom-4 z-[200] pointer-events-none">
               <Image src="/logo_white.svg" alt="SUDS logo" width={270} height={108} className="h-[72px] w-auto" />
             </div>
-            {selected.mode === "phrases" && (
+            {(selected.mode === "phrases" || selected.mode === "welcoming") && (
               <>
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[200] pointer-events-none">
                   <span className="text-white/80 text-sm font-medium tracking-wide">su.devsoc.co.za</span>
