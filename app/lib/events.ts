@@ -25,6 +25,6 @@ export const events: Event[] = [
     startDate: "2026-03-05T17:30:00+02:00",
     endDate: "2026-03-05T18:30:00+02:00",
     link: "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Azv6pjwKWEKEM6Eg3_zTSPsybXK7K5JLha3az2Hhn3BURTJIUTQ5T05XUTVLWjg2WExSQTFVRUZUMi4u",
-    image: "/events/scytale-event.jpg",
+    image: "/events/scytale-event.png",
   },
 ];
