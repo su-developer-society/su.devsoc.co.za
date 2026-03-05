@@ -19,7 +19,8 @@ type DisplayMode =
   | "pillarsCycle"
   | "dvd"
   | "logoMode"
-  | "welcoming";
+  | "welcoming"
+  | "scytale";
 
 type DisplayOption = {
   id: string;
@@ -194,6 +195,13 @@ const displayOptions: DisplayOption[] = [
     accent: { from: "from-purple-500/30", via: "via-indigo-500/20", to: "to-fuchsia-500/25" },
   },
   ...pillarScreens,
+  {
+    id: "scytale",
+    label: "Scytale x SUDS",
+    description: "Effects of AI on Security & Privacy Compliance.",
+    mode: "scytale" as DisplayMode,
+    accent: { from: "from-teal-400/30", via: "via-cyan-500/20", to: "to-blue-500/25" },
+  },
 ];
 
 /* ---- Welcoming Event slides ---- */
@@ -226,6 +234,33 @@ const welcomingSlides: WelcomingSlide[] = [
   { title: "Div & Conquer", subtitle: "hacakthon.devsoc.co.za" },
   { title: "Society Fee = R0", subtitle: "Dry January? Nah Dry February" },
   { title: "Nvidia or AMD? I Prefer A Intel GPU", subtitle: "Who Even Writes These Things" },
+];
+
+/* ---- Scytale x SUDS Event slides ---- */
+type ScytaleSlide = { title: string; subtitle?: string };
+
+const scytaleSlides: ScytaleSlide[] = [
+  { title: "Effects of AI on Security and Privacy Compliance", subtitle: "Scytale x SUDS" },
+  { title: "Governance Is Not a Buzzword", subtitle: "It's the backbone of trust" },
+  { title: "Risk Is Inevitable — Being Unprepared Isn't", subtitle: "Know your threat landscape" },
+  { title: "Compliance Without Understanding Is Just a Checklist", subtitle: "Go deeper" },
+  { title: "AI Doesn't Replace Auditors — It Arms Them", subtitle: "Automation meets accountability" },
+  { title: "Your Data Pipeline Is Only as Strong as Its Weakest Policy" },
+  { title: "SOC 2 · ISO 27001 · POPIA · GDPR", subtitle: "Frameworks that matter" },
+  { title: "AI Can Write Policies — But Who Governs the AI?" },
+  { title: "Privacy by Design, Not by Afterthought", subtitle: "Build it in from day one" },
+  { title: "Shadow IT Is the New Shadow Risk", subtitle: "Visibility is compliance" },
+  { title: "GRC in the Age of AI", subtitle: "Governance · Risk · Compliance" },
+  { title: "Automate Compliance, Not Complacency" },
+  { title: "The Cost of a Breach > The Cost of Compliance", subtitle: "Invest wisely" },
+  { title: "Trust Is Earned in Milliseconds, Lost in One Incident" },
+  { title: "AI Threat Modelling — Faster, Broader, Deeper", subtitle: "Scale your defences" },
+  { title: "Third-Party Risk Is Your Risk", subtitle: "Supply chain security matters" },
+  { title: "Continuous Compliance > Point-in-Time Audits", subtitle: "Stay audit-ready 24/7" },
+  { title: "If You Can't Measure Risk, You Can't Manage It" },
+  { title: "Data Sovereignty Starts With Knowing Where Your Data Lives" },
+  { title: "Security Culture Eats Security Tools for Breakfast" },
+  { title: "Scytale — Compliance on Autopilot", subtitle: "scytale.ai" },
 ];
 
 function shuffleArray<T>(arr: T[]): T[] {
@@ -319,6 +354,12 @@ export default function DisplayPage() {
   const [welcomeTypedTitle, setWelcomeTypedTitle] = useState("");
   const [welcomeTypedSub, setWelcomeTypedSub] = useState("");
 
+  /* Scytale-event state */
+  const [scytaleOrder, setScytaleOrder] = useState<ScytaleSlide[]>([]);
+  const [scytaleIndex, setScytaleIndex] = useState(0);
+  const [scytaleTypedTitle, setScytaleTypedTitle] = useState("");
+  const [scytaleTypedSub, setScytaleTypedSub] = useState("");
+
   useEffect(() => {
     const phraseTimer = setInterval(() => {
       setPhraseIndex((i) => (i + 1) % phrases.length);
@@ -338,6 +379,7 @@ export default function DisplayPage() {
     }, 15000);
     /* Shuffle welcoming slides on mount (client-only to avoid hydration mismatch) */
     setWelcomeOrder(shuffleArray(welcomingSlides));
+    setScytaleOrder(shuffleArray(scytaleSlides));
     return () => {
       clearInterval(phraseTimer);
       clearInterval(partnerTimer);
@@ -384,6 +426,37 @@ export default function DisplayPage() {
     }, 10000);
     return () => { cancelled = true; clearInterval(titleTimer); clearInterval(advance); };
   }, [selected.mode, welcomeIndex, welcomeOrder]);
+
+  /* Scytale slide cycling & typing */
+  useEffect(() => {
+    if (selected.mode !== "scytale" || scytaleOrder.length === 0) return;
+    const slide = scytaleOrder[scytaleIndex % scytaleOrder.length];
+    let cancelled = false;
+    let i = 0;
+    setScytaleTypedTitle("");
+    setScytaleTypedSub("");
+    const titleTimer = setInterval(() => {
+      if (cancelled) return;
+      i += 1;
+      setScytaleTypedTitle(slide.title.slice(0, i));
+      if (i >= slide.title.length) {
+        clearInterval(titleTimer);
+        if (slide.subtitle) {
+          let j = 0;
+          const subTimer = setInterval(() => {
+            if (cancelled) { clearInterval(subTimer); return; }
+            j += 1;
+            setScytaleTypedSub(slide.subtitle!.slice(0, j));
+            if (j >= slide.subtitle!.length) clearInterval(subTimer);
+          }, 35);
+        }
+      }
+    }, 45);
+    const advance = setInterval(() => {
+      setScytaleIndex((idx) => (idx + 1) % scytaleOrder.length);
+    }, 10000);
+    return () => { cancelled = true; clearInterval(titleTimer); clearInterval(advance); };
+  }, [selected.mode, scytaleIndex, scytaleOrder]);
 
   const currentTypedSource = useMemo(() => {
     if (selected.mode === "phrases") return phrases[phraseIndex];
@@ -697,6 +770,41 @@ export default function DisplayPage() {
           </div>
         );
       }
+      case "scytale": {
+        const slide = scytaleOrder.length > 0 ? scytaleOrder[scytaleIndex % scytaleOrder.length] : null;
+        return (
+          <div className="relative h-full w-full overflow-hidden flex items-center justify-center">
+            <div className="absolute inset-0 overflow-hidden">
+              {/* Teal/cyan GRC-themed blobs */}
+              <div className="absolute top-[5%] left-[10%] w-[60%] h-[60%] rounded-full bg-[radial-gradient(circle,rgba(20,184,166,0.45)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-1 18s ease-in-out infinite' }} />
+              <div className="absolute top-[45%] left-[55%] w-[55%] h-[55%] rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.4)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-2 22s ease-in-out infinite' }} />
+              <div className="absolute top-[25%] left-[35%] w-[65%] h-[65%] rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.35)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-3 26s ease-in-out infinite' }} />
+              <div className="absolute top-[55%] left-[15%] w-[50%] h-[50%] rounded-full bg-[radial-gradient(circle,rgba(20,184,166,0.32)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-4 20s ease-in-out infinite' }} />
+              <div className="absolute top-[15%] left-[60%] w-[50%] h-[50%] rounded-full bg-[radial-gradient(circle,rgba(34,211,238,0.3)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-5 24s ease-in-out infinite' }} />
+              <div className="absolute top-[65%] left-[40%] w-[45%] h-[45%] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.28)_0%,transparent_70%)] blur-3xl" style={{ animation: 'blob-drift-4 28s ease-in-out infinite reverse' }} />
+            </div>
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:70px_70px] opacity-40" />
+            <div className="relative flex flex-col items-center justify-center gap-5 text-center px-8 max-w-5xl">
+              <div className="flex items-center gap-4 mb-2">
+                <img src="/scytale.png" alt="Scytale" className="h-10 w-auto object-contain" />
+                <span className="text-teal-300 text-lg font-light">×</span>
+                <span className="text-xs uppercase tracking-[0.35em] text-teal-300">SUDS</span>
+              </div>
+              <div className="text-[11px] uppercase tracking-[0.35em] text-teal-300/80">Effects of AI on Security &amp; Privacy Compliance</div>
+              <div className="text-4xl sm:text-5xl font-bold text-white transition-all duration-700 min-h-[1.3em]">
+                {scytaleTypedTitle}
+                {cursor}
+              </div>
+              {slide?.subtitle && (
+                <div className="text-lg sm:text-xl text-teal-200 min-h-[1.5em]">
+                  {scytaleTypedSub}
+                </div>
+              )}
+              <div className="text-sm text-gray-400">Governance · Risk · Compliance</div>
+            </div>
+          </div>
+        );
+      }
       default:
         return null;
     }
@@ -776,7 +884,7 @@ export default function DisplayPage() {
             <div className="absolute left-4 bottom-4 z-[200] pointer-events-none">
               <Image src="/logo_white.svg" alt="SUDS logo" width={270} height={108} className="h-[72px] w-auto" />
             </div>
-            {(selected.mode === "phrases" || selected.mode === "welcoming") && (
+            {(selected.mode === "phrases" || selected.mode === "welcoming" || selected.mode === "scytale") && (
               <>
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[200] pointer-events-none">
                   <span className="text-white/80 text-sm font-medium tracking-wide">su.devsoc.co.za</span>
