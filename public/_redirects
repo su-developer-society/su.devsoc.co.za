@@ -1,2 +1,3 @@
 /redirect/*      https://example.com/:splat      301
 /whatsapp      https://chat.whatsapp.com/DSxkAsgqaNmFd1JHm2NEkr      301
+/suggestions      https://tally.so/r/obpXpV      301
