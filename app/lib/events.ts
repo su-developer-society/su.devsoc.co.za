@@ -27,4 +27,13 @@ export const events: Event[] = [
     link: "https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=Azv6pjwKWEKEM6Eg3_zTSPsybXK7K5JLha3az2Hhn3BURTJIUTQ5T05XUTVLWjg2WExSQTFVRUZUMi4u",
     image: "/events/scytale-event.png",
   },
+  {
+    id: "what-is-plone-26",
+    title: "What the @#$ is Plone? with Juizi",
+    description: "Get in-depth insights into one of the world’s most succesful open-sources projects from the professionals who use it on the daily. Discover how contributing to open source can supercharge your skills, strengthen your CV, and open doors to exciting career opportunities. Learn practical Git and collaboration best practices, and hear real-world insights into building and running a web development business in South Africa. Whether you're contributing to your first project or dreaming of your own tech venture, this session is for you.",
+    startDate: "2026-07-29T17:30:00+02:00",
+    endDate: "2026-07-29T18:30:00+02:00",
+    link: "https://tally.so/r/PdWPQP",
+    image: "/events/what-is-plone-26.png",
+  },
 ];
