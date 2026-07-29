@@ -20,7 +20,8 @@ type DisplayMode =
   | "dvd"
   | "logoMode"
   | "welcoming"
-  | "scytale";
+  | "scytale"
+  | "plone";
 
 type DisplayOption = {
   id: string;
@@ -202,6 +203,13 @@ const displayOptions: DisplayOption[] = [
     mode: "scytale" as DisplayMode,
     accent: { from: "from-teal-400/30", via: "via-cyan-500/20", to: "to-blue-500/25" },
   },
+  {
+    id: "plone",
+    label: "What the @#$ is Plone?",
+    description: "Tonight's Plone event projector screen.",
+    mode: "plone" as DisplayMode,
+    accent: { from: "from-sky-400/30", via: "via-blue-500/20", to: "to-cyan-500/25" },
+  },
 ];
 
 /* ---- Welcoming Event slides ---- */
@@ -261,6 +269,32 @@ const scytaleSlides: ScytaleSlide[] = [
   { title: "Data Sovereignty Starts With Knowing Where Your Data Lives" },
   { title: "Security Culture Eats Security Tools for Breakfast" },
   { title: "Scytale — Compliance on Autopilot", subtitle: "scytale.ai" },
+];
+
+/* ---- What the @#$ is Plone? Event slides ---- */
+type PloneSlide = { title: string; subtitle?: string };
+
+const ploneSlides: PloneSlide[] = [
+  { title: "What the @#$ is Plone?", subtitle: "Let's find out" },
+  { title: "Open Source Is Built by People Who Show Up", subtitle: "Your contribution matters" },
+  { title: "Your First Pull Request Starts Here", subtitle: "Fork · Build · Commit · Share" },
+  { title: "Python Powered. Community Driven.", subtitle: "Meet Plone" },
+  { title: "The Web Is Better When We Build It Together", subtitle: "Open source, open doors" },
+  { title: "Read the Docs. Break Some Things. Learn.", subtitle: "That's how builders grow" },
+  { title: "Git Commit. Push. Review. Repeat.", subtitle: "Collaboration is a superpower" },
+  { title: "You Don't Need Permission to Start Contributing", subtitle: "Find an issue and jump in" },
+  { title: "A Great CMS Gets Out of the Creator's Way", subtitle: "Content first" },
+  { title: "Code Can Outlive the Company That Wrote It", subtitle: "That's the power of open source" },
+  { title: "Good Software Is a Conversation", subtitle: "Code reviews make it better" },
+  { title: "From Campus Project to Global Community", subtitle: "One contribution at a time" },
+  { title: "Your GitHub Profile Is a Living CV", subtitle: "Build in public" },
+  { title: "The Best Way to Learn a Codebase Is to Change It", subtitle: "Start small, ship often" },
+  { title: "Websites Worth Having", subtitle: "Juizi × SUDS" },
+  { title: "Open Source Has Room for You", subtitle: "Code · Design · Docs · Community" },
+  { title: "Build for People, Not Just Browsers", subtitle: "Accessible. Useful. Human." },
+  { title: "Today's Bug Could Be Tomorrow's Pull Request", subtitle: "Turn curiosity into code" },
+  { title: "Community Is the Original Developer Tool", subtitle: "Ask questions. Share answers." },
+  { title: "Plone: More Than a CMS", subtitle: "A global open-source community" },
 ];
 
 function shuffleArray<T>(arr: T[]): T[] {
@@ -360,6 +394,12 @@ export default function DisplayPage() {
   const [scytaleTypedTitle, setScytaleTypedTitle] = useState("");
   const [scytaleTypedSub, setScytaleTypedSub] = useState("");
 
+  /* Plone-event state */
+  const [ploneOrder, setPloneOrder] = useState<PloneSlide[]>([]);
+  const [ploneIndex, setPloneIndex] = useState(0);
+  const [ploneTypedTitle, setPloneTypedTitle] = useState("");
+  const [ploneTypedSub, setPloneTypedSub] = useState("");
+
   useEffect(() => {
     const phraseTimer = setInterval(() => {
       setPhraseIndex((i) => (i + 1) % phrases.length);
@@ -380,6 +420,7 @@ export default function DisplayPage() {
     /* Shuffle welcoming slides on mount (client-only to avoid hydration mismatch) */
     setWelcomeOrder(shuffleArray(welcomingSlides));
     setScytaleOrder(shuffleArray(scytaleSlides));
+    setPloneOrder(shuffleArray(ploneSlides));
     return () => {
       clearInterval(phraseTimer);
       clearInterval(partnerTimer);
@@ -457,6 +498,47 @@ export default function DisplayPage() {
     }, 10000);
     return () => { cancelled = true; clearInterval(titleTimer); clearInterval(advance); };
   }, [selected.mode, scytaleIndex, scytaleOrder]);
+
+  /* Plone slide cycling & typing */
+  useEffect(() => {
+    if (selected.mode !== "plone" || ploneOrder.length === 0) return;
+    const slide = ploneOrder[ploneIndex % ploneOrder.length];
+    let cancelled = false;
+    let subtitleTimer: ReturnType<typeof setInterval> | undefined;
+    let i = 0;
+
+    setPloneTypedTitle("");
+    setPloneTypedSub("");
+
+    const titleTimer = setInterval(() => {
+      if (cancelled) return;
+      i += 1;
+      setPloneTypedTitle(slide.title.slice(0, i));
+      if (i >= slide.title.length) {
+        clearInterval(titleTimer);
+        if (slide.subtitle) {
+          let j = 0;
+          subtitleTimer = setInterval(() => {
+            if (cancelled) return;
+            j += 1;
+            setPloneTypedSub(slide.subtitle!.slice(0, j));
+            if (j >= slide.subtitle!.length) clearInterval(subtitleTimer);
+          }, 35);
+        }
+      }
+    }, 45);
+
+    const advance = setInterval(() => {
+      setPloneIndex((idx) => (idx + 1) % ploneOrder.length);
+    }, 10000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(titleTimer);
+      if (subtitleTimer) clearInterval(subtitleTimer);
+      clearInterval(advance);
+    };
+  }, [selected.mode, ploneIndex, ploneOrder]);
 
   const currentTypedSource = useMemo(() => {
     if (selected.mode === "phrases") return phrases[phraseIndex];
@@ -805,6 +887,41 @@ export default function DisplayPage() {
           </div>
         );
       }
+      case "plone": {
+        const slide = ploneOrder.length > 0 ? ploneOrder[ploneIndex % ploneOrder.length] : null;
+        return (
+          <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
+            <div className="absolute inset-0 overflow-hidden">
+              <div className="absolute top-[-12%] left-[-8%] h-[72%] w-[72%] rounded-full bg-[radial-gradient(circle,rgba(0,131,190,0.5)_0%,transparent_68%)] blur-3xl" style={{ animation: "blob-drift-1 18s ease-in-out infinite" }} />
+              <div className="absolute right-[-8%] bottom-[-20%] h-[78%] w-[78%] rounded-full bg-[radial-gradient(circle,rgba(14,165,233,0.38)_0%,transparent_70%)] blur-3xl" style={{ animation: "blob-drift-2 22s ease-in-out infinite" }} />
+              <div className="absolute top-[20%] left-[42%] h-[58%] w-[58%] rounded-full bg-[radial-gradient(circle,rgba(37,99,235,0.3)_0%,transparent_70%)] blur-3xl" style={{ animation: "blob-drift-3 25s ease-in-out infinite" }} />
+            </div>
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.055)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.055)_1px,transparent_1px)] bg-[size:70px_70px] opacity-40" />
+            <div className="relative flex max-w-5xl flex-col items-center justify-center px-8 pb-24 text-center">
+              <div className="mb-7 flex items-center gap-5">
+                <Image src="/plone-logo.svg" alt="Plone" width={215} height={56} className="h-14 w-auto object-contain drop-shadow-[0_0_24px_rgba(0,131,190,0.4)]" />
+                <span className="text-xl font-light text-sky-300">×</span>
+                <span className="text-xs uppercase tracking-[0.35em] text-sky-300">SUDS</span>
+              </div>
+              <div className="mb-5 text-[11px] uppercase tracking-[0.35em] text-sky-300/80">
+                What the @#$ is Plone? · with Juizi
+              </div>
+              <h1 className="min-h-[2.2em] max-w-4xl text-4xl font-black leading-[1.08] text-white sm:text-6xl">
+                {ploneTypedTitle}
+                {cursor}
+              </h1>
+              {slide?.subtitle && (
+                <p className="mt-5 min-h-[1.5em] text-lg text-sky-100 sm:text-xl">
+                  {ploneTypedSub}
+                </p>
+              )}
+              <div className="mt-5 text-[11px] uppercase tracking-[0.3em] text-sky-300/70">
+                29 July 2026 · Stellenbosch
+              </div>
+            </div>
+          </div>
+        );
+      }
       default:
         return null;
     }
@@ -884,7 +1001,7 @@ export default function DisplayPage() {
             <div className="absolute left-4 bottom-4 z-[200] pointer-events-none">
               <Image src="/logo_white.svg" alt="SUDS logo" width={270} height={108} className="h-[72px] w-auto" />
             </div>
-            {(selected.mode === "phrases" || selected.mode === "welcoming" || selected.mode === "scytale") && (
+            {(selected.mode === "phrases" || selected.mode === "welcoming" || selected.mode === "scytale" || selected.mode === "plone") && (
               <>
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[200] pointer-events-none">
                   <span className="text-white/80 text-sm font-medium tracking-wide">su.devsoc.co.za</span>
