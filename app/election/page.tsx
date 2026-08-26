@@ -89,6 +89,26 @@ export default function ElectionComingSoon() {
 
             <div className="mb-8 rounded-3xl border border-green-500/20 bg-white/5 p-6 sm:p-8">
               <div className="text-sm font-semibold uppercase tracking-[0.2em] text-green-400">
+                Add to calendar
+              </div>
+              <h2 className="mt-3 text-2xl font-black tracking-tight text-white sm:text-3xl">
+                Save the election date to Google Calendar.
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-gray-300">
+                Add the event to your calendar so you don&apos;t miss the Executive Election and AGM.
+              </p>
+              <a
+                href="https://calendar.app.google/zGYuEisc9o3sdrTk7"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center justify-center rounded-full bg-green-500 px-6 py-3 text-base font-semibold text-slate-950 transition-colors hover:bg-green-400"
+              >
+                Add to Google Calendar
+              </a>
+            </div>
+
+            <div className="mb-8 rounded-3xl border border-green-500/20 bg-white/5 p-6 sm:p-8">
+              <div className="text-sm font-semibold uppercase tracking-[0.2em] text-green-400">
                 Nominations
               </div>
               <h2 className="mt-3 text-2xl font-black tracking-tight text-white sm:text-3xl">
